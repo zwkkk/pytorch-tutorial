@@ -84,9 +84,11 @@ with torch.no_grad():
         images = images.reshape(-1, 28*28).to(device)
         labels = labels.to(device)
         outputs = model(images)
-        _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
+        _, predicted = torch.max(outputs.data, 1)  # 输入参数 1.张量 2.维度。即找出输入张量中每一行（dim=1）的最大值及其索引。
+                                                   # 输出参数 1.每一行最大数 2.每一行最大数对应索引
+                                                   # 用在分类问题中，要得出每一个输入最可能的类别，因为要找出属于那一类概率最大的值的索引，即predicted
+        total += labels.size(0)                    #总的数量
+        correct += (predicted == labels).sum().item() #正确数量
 
     print('Accuracy of the network on the 10000 test images: {} %'.format(100 * correct / total))
 
